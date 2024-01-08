@@ -30,7 +30,7 @@ namespace BetterBandages.Settings {
         public bool BandageBleedEnabled { get; set; } = false;
 
         [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect")]
-        [SettingPropertyFloatingInteger("{=BC_L2llEt}Lowest Health Percent for Bleed Effect", 0.01f, 1f, "0.0 %", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
+        [SettingPropertyFloatingInteger("{=BC_L2llEt}Health Percent when Bleed Effect can occur", 0.01f, 1f, "0.0 %", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
         public float BandageBleedTiggerThreshold { get; set; } = .2f;
 
         [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect")]
@@ -42,12 +42,26 @@ namespace BetterBandages.Settings {
         public float BandageBleedDamagePercent { get; set; } = .05f;
 
         [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect")]
-        [SettingPropertyInteger("{=BC_L2llEt}Bleed Interval", 1, 120, "0.0 {=BC_mIjl1T}Seconds", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
+        [SettingPropertyInteger("{=BC_L2llEt}Bleed Interval", 1, 120, "0 {=BC_mIjl1T}Seconds", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
         public int BandageBleedInterval { get; set; } = 5;
 
         [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect")]
-        [SettingPropertyInteger("{=BC_L2llEt}Bleed Duration", 1, 300, "0.0 {=BC_mIjl1T}Seconds", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
+        [SettingPropertyInteger("{=BC_L2llEt}Bleed Duration", 1, 300, "0 {=BC_mIjl1T}Seconds", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
         public int BandageBleedDuration { get; set; } = 60;
+
+
+
+        [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect/Stacking")]
+        [SettingPropertyBool("{=BC_licHNP}Bleed Effect Stack", IsToggle = true, Order = 0, RequireRestart = false, HintText = "{=BC_xACH0R}SHould bleeding be possible")]
+        public bool BandageBleedStackEnabled { get; set; } = false;
+
+        [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect/Stacking")]
+        [SettingPropertyInteger("{=BC_L2llEt}Bleed Max Stack Size", 1, 100, "0 {=BC_mIjl1T}Stacks", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
+        public int BandageBleedStackSize { get; set; } = 3;
+
+        [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect/Stacking")]
+        [SettingPropertyBool("{=BC_licHNP}Bandage Clears Bleed Stack", IsToggle = true, Order = 0, RequireRestart = false, HintText = "{=BC_xACH0R}SHould bleeding be possible")]
+        public bool BandageClearsBleedStack { get; set; } = false;
 
 
         public override string Id { get { return base.GetType().Assembly.GetName().Name; } }

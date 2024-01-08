@@ -14,6 +14,7 @@ namespace BetterBandages.Behaviors {
 
         private static bool activlyBandaging = false;
         private static bool isBleeding = false;
+        private static int bleedStack;
 
         private int bandageCount;
 
@@ -43,8 +44,19 @@ namespace BetterBandages.Behaviors {
                             bandageCount--;
 
                             if (isBleeding) {
-                                isBleeding = false;
-                                NotifyHelper.ChatMessage(new TextObject("{=BC_qezRvY}Bleeding removed.").ToString(), MsgType.Good);
+
+                                if (BetterBandages.Settings.BandageClearsBleedStack) {
+                                    bleedStack = 0;
+                                } else {
+                                    bleedStack--;
+                                }
+                                
+                                if (bleedStack == 0) {
+                                    isBleeding = false;
+                                    NotifyHelper.ChatMessage(new TextObject("{=BC_qezRvY}Bleeding removed.").ToString(), MsgType.Good);
+                                } else {
+                                    NotifyHelper.ChatMessage(new TextObject("{=BC_qezRvY}Bleeding stack removed.").ToString(), MsgType.Good);
+                                }
                             }
                             activlyBandaging = false;
 
@@ -65,7 +77,7 @@ namespace BetterBandages.Behaviors {
 
                     if (isBleeding && BetterBandages.Settings.BandageBleedEnabled) {
                         if (bleedInterval.IsPast) {
-                            Mission.Current.MainAgent.Health -= (BetterBandages.Settings.BandageBleedDamagePercent * Mission.MainAgent.HealthLimit);
+                            Mission.Current.MainAgent.Health -= ((BetterBandages.Settings.BandageBleedDamagePercent * bleedStack) * Mission.MainAgent.HealthLimit);
 
                             if (Mission.Current.MainAgent.Health < 0) {
                                 Mission.Current.MainAgent.Die(new Blow());
@@ -128,6 +140,11 @@ namespace BetterBandages.Behaviors {
                                 bleedInterval = MissionTime.SecondsFromNow(BetterBandages.Settings.BandageBleedInterval);
                                 bleedDuration = MissionTime.SecondsFromNow(BetterBandages.Settings.BandageBleedDuration);
                                 isBleeding = true;
+
+                                if (bleedStack < BetterBandages.Settings.BandageBleedStackSize) {
+                                    bleedStack++;
+                                }
+
                                 NotifyHelper.ChatMessage("bleed applied", MsgType.Warning);
                             }
                         }
