@@ -62,9 +62,9 @@ namespace BetterBandages.Behaviors {
 
                             string text;
                             if (bandageCount < 2) {
-                                text = new TextObject("{=BC_q2WCze}Bandage applied!") + bandageCount.ToString() + new TextObject("{=BC_YZj7gF}bandage left!");
+                                text = new TextObject("{=BC_q2WCze}Bandage applied! ") + bandageCount.ToString() + new TextObject(" {=BC_YZj7gF}bandage left!");
                             } else {
-                                text = new TextObject("{=BC_q2WCze}Bandage applied!") + bandageCount.ToString() + new TextObject("{=BC_YZj2gF}bandages left!");
+                                text = new TextObject("{=BC_q2WCze}Bandage applied! ") + bandageCount.ToString() + new TextObject(" {=BC_YZj2gF}bandages left!");
                             }
 
                             NotifyHelper.ChatMessage(text, MsgType.Good);
@@ -141,11 +141,15 @@ namespace BetterBandages.Behaviors {
                                 bleedDuration = MissionTime.SecondsFromNow(BetterBandages.Settings.BandageBleedDuration);
                                 isBleeding = true;
 
-                                if (bleedStack < BetterBandages.Settings.BandageBleedStackSize) {
-                                    bleedStack++;
+                                if (BetterBandages.Settings.BandageBleedStackEnabled) {
+                                    if (bleedStack < BetterBandages.Settings.BandageBleedStackSize) {
+                                        bleedStack++;
+                                    }
+                                } else {
+                                    bleedStack = 1;
                                 }
 
-                                NotifyHelper.ChatMessage("bleed applied", MsgType.Warning);
+                                NotifyHelper.ChatMessage(bleedStack + "x bleed applied for " + BetterBandages.Settings.BandageBleedDuration + " seconds", MsgType.Warning);
                             }
                         }
                     }
