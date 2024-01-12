@@ -1,6 +1,6 @@
 ﻿namespace BetterBandages.Localization {
     public class RefValues {
-        public const string BandageText  = "{=BBA_39fja3}Bandages";
+        public const string BandageText = "{=BBA_39fja3}Bandages";
         public const string BleedText = "{=BBA_aso20d}Bleed Effect";
         public const string SecondsText = "{=BBA_mIjl1T}Seconds";
         public const string StackingText = "{=BBA_k30f8a}Stacking";
@@ -34,5 +34,20 @@
         public const string MaxStackHint = "{=BBA_r9fBmv}Maximum bleed stack";
         public const string ClearStackText = "{=BBA_YKi92O}Bandage Clears Bleed Stack";
         public const string ClearStackHint = "{=BBA_K7kJb6}Should bandaging clear the bleed stack";
+
+        public const string CancelBandaging = "{=BBA_0yN5hL}Bandaging canceled due to movment!";
+        public const string RemoveBleed = "{=BBA_d49hR8}Bleeding removed.";
+        public const string RemoveBleedStack = "{=BBA_qezRvY}Bleeding stack removed.";
+        public const string BandageApplied = "{=BBA_q2WCze}Bandage applied!";
+        public const string SingleBandLeft = "{=BBA_CRKIYc}bandage left!";
+        public const string MultipleBandLeft = "{=BBA_YZj2gF}bandages left!";
+
+        public const string ApplyingBandage = "{=BBA_RnoIZo}Applying bandage... It will take";
+        public const string FullHealth = "{=BBA_359Qlt}You're health is full. You have";
+        public const string AlreadyApplying = "{=BBA_v3QHtG}You're already applying a bandage!";
+        public const string OutOfBandages = "{=BBA_dU1uDF}Out of bandages!";
+        public const string CantBandage = "{=BBA_CfS4GM}You can't bandage while moving!";
+
+        public const string ApplyBleedMsg = "{=BBA_UbebxO}x bleed applied for ";
     }
 }

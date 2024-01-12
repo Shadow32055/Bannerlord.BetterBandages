@@ -4,6 +4,7 @@ using TaleWorlds.Library;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
+using BetterBandages.Localization;
 
 namespace BetterBandages.Behaviors {
     public class Bandages : MissionBehavior {
@@ -31,64 +32,66 @@ namespace BetterBandages.Behaviors {
                 //Check if we are in a mission
                 if (Mission.Current != null && Mission.Current.MainAgent != null) {
 
-                    if (activlyBandaging) {
-                        if (IsMoving(Mission.Current.MainAgent.MovementVelocity)) {
-                            NotifyHelper.ChatMessage(new TextObject("{=BC_qezRvY}Bandaging canceled due to movment!").ToString(), MsgType.Alert);
-                            activlyBandaging = false;
-                        }
+                    if (Mission.Current.MainAgent.Health > 0) {
+                        if (activlyBandaging) {
+                            if (IsMoving(Mission.Current.MainAgent.MovementVelocity)) {
+                                NotifyHelper.ChatMessage(new TextObject(RefValues.CancelBandaging).ToString(), MsgType.Alert);
+                                activlyBandaging = false;
+                            }
 
-                        if (bandageTime.IsPast) {
-                            float healAmount = HealthHelper.GetMaxHealAmount(BetterBandages.Settings.BandageHealAmount, Mission.MainAgent);
+                            if (bandageTime.IsPast) {
+                                float healAmount = HealthHelper.GetMaxHealAmount(BetterBandages.Settings.BandageHealAmount, Mission.MainAgent);
 
-                            Mission.Current.MainAgent.Health += healAmount;
-                            bandageCount--;
+                                Mission.Current.MainAgent.Health += healAmount;
+                                bandageCount--;
 
-                            if (isBleeding) {
+                                if (isBleeding) {
 
-                                if (BetterBandages.Settings.BandageClearsBleedStack) {
-                                    bleedStack = 0;
-                                } else {
-                                    bleedStack--;
+                                    if (BetterBandages.Settings.BandageClearsBleedStack) {
+                                        bleedStack = 0;
+                                    } else {
+                                        bleedStack--;
+                                    }
+
+                                    if (bleedStack == 0) {
+                                        isBleeding = false;
+                                        NotifyHelper.ChatMessage(new TextObject(RefValues.RemoveBleed).ToString(), MsgType.Good);
+                                    } else {
+                                        NotifyHelper.ChatMessage(new TextObject(RefValues.RemoveBleedStack).ToString(), MsgType.Good);
+                                    }
                                 }
-                                
-                                if (bleedStack == 0) {
-                                    isBleeding = false;
-                                    NotifyHelper.ChatMessage(new TextObject("{=BC_qezRvY}Bleeding removed.").ToString(), MsgType.Good);
+                                activlyBandaging = false;
+
+                                string text;
+                                if (bandageCount < 2) {
+                                    text = new TextObject(RefValues.BandageApplied) +  " " + bandageCount.ToString() + " " + new TextObject(RefValues.SingleBandLeft); ;
                                 } else {
-                                    NotifyHelper.ChatMessage(new TextObject("{=BC_qezRvY}Bleeding stack removed.").ToString(), MsgType.Good);
+                                    text = new TextObject(RefValues.BandageApplied) + " " + bandageCount.ToString() + " " + new TextObject(RefValues.MultipleBandLeft);
                                 }
-                            }
-                            activlyBandaging = false;
 
-                            string text;
-                            if (bandageCount < 2) {
-                                text = new TextObject("{=BC_q2WCze}Bandage applied! ") + bandageCount.ToString() + new TextObject(" {=BC_YZj7gF}bandage left!");
-                            } else {
-                                text = new TextObject("{=BC_q2WCze}Bandage applied! ") + bandageCount.ToString() + new TextObject(" {=BC_YZj2gF}bandages left!");
+                                NotifyHelper.ChatMessage(text, MsgType.Good);
                             }
-
-                            NotifyHelper.ChatMessage(text, MsgType.Good);
                         }
-                    }
 
-                    if (Input.IsKeyPressed(BetterBandages.BandageKey)) {
-                        UseBandage();
-                    }
-
-                    if (isBleeding && BetterBandages.Settings.BandageBleedEnabled) {
-                        if (bleedInterval.IsPast) {
-                            Mission.Current.MainAgent.Health -= ((BetterBandages.Settings.BandageBleedDamagePercent * bleedStack) * Mission.MainAgent.HealthLimit);
-
-                            if (Mission.Current.MainAgent.Health < 0) {
-                                Mission.Current.MainAgent.Die(new Blow());
-                            }
-
-                            bleedInterval = MissionTime.SecondsFromNow(BetterBandages.Settings.BandageBleedInterval);
+                        if (Input.IsKeyPressed(BetterBandages.BandageKey)) {
+                            UseBandage();
                         }
-                    }
 
-                    if (bleedDuration.IsPast) {
-                        isBleeding = false;
+                        if (isBleeding && BetterBandages.Settings.BandageBleedEnabled) {
+                            if (bleedInterval.IsPast) {
+                                Mission.Current.MainAgent.Health -= ((BetterBandages.Settings.BandageBleedDamagePercent * bleedStack) * Mission.MainAgent.HealthLimit);
+
+                                if (Mission.Current.MainAgent.Health < 0) {
+                                    Mission.Current.MainAgent.Die(new Blow());
+                                }
+
+                                bleedInterval = MissionTime.SecondsFromNow(BetterBandages.Settings.BandageBleedInterval);
+                            }
+                        }
+
+                        if (bleedDuration.IsPast) {
+                            isBleeding = false;
+                        }
                     }
                 }
             } catch (Exception e) {
@@ -110,18 +113,18 @@ namespace BetterBandages.Behaviors {
                         if (Mission.Current.MainAgent.Health != Mission.Current.MainAgent.HealthLimit) {
                             bandageTime = MissionTime.SecondsFromNow(BetterBandages.Settings.BandageTime);
                             activlyBandaging = true;
-                            NotifyHelper.ChatMessage(new TextObject("{=BC_RnoIZo}Applying bandage... It will take ") + BetterBandages.Settings.BandageTime.ToString() + new TextObject(" seconds."), MsgType.Good);
+                            NotifyHelper.ChatMessage(new TextObject(RefValues.ApplyingBandage) + " " + BetterBandages.Settings.BandageTime.ToString() + " " + new TextObject(RefValues.SecondsText), MsgType.Good);
                         } else {
-                            NotifyHelper.ChatMessage(new TextObject("{=BC_359Qlt}You're health is full. You have ") + bandageCount.ToString() + new TextObject(" bandages"), MsgType.Alert);
+                            NotifyHelper.ChatMessage(new TextObject(RefValues.FullHealth) + " " + bandageCount.ToString() + " " + new TextObject(RefValues.BandageText), MsgType.Alert);
                         }
                     } else {
-                        NotifyHelper.ChatMessage(new TextObject("{=BC_v3QHtG}You're already applying a bandage!").ToString(), MsgType.Alert);
+                        NotifyHelper.ChatMessage(new TextObject(RefValues.AlreadyApplying).ToString(), MsgType.Alert);
                     }
                 } else {
-                    NotifyHelper.ChatMessage(new TextObject("{=BC_dU1uDF}Out of bandages!").ToString(), MsgType.Alert);
+                    NotifyHelper.ChatMessage(new TextObject(RefValues.OutOfBandages).ToString(), MsgType.Alert);
                 }
             } else {
-                NotifyHelper.ChatMessage(new TextObject("{=BC_CfS4GM}You can't bandage while moving!").ToString(), MsgType.Alert);
+                NotifyHelper.ChatMessage(new TextObject(RefValues.CantBandage).ToString(), MsgType.Alert);
             }
         }
 
@@ -148,8 +151,7 @@ namespace BetterBandages.Behaviors {
                                 } else {
                                     bleedStack = 1;
                                 }
-
-                                NotifyHelper.ChatMessage(bleedStack + "x bleed applied for " + BetterBandages.Settings.BandageBleedDuration + " seconds", MsgType.Warning);
+                                NotifyHelper.ChatMessage(new TextObject(RefValues.ApplyBleedMsg) + " " + BetterBandages.Settings.BandageBleedDuration.ToString() + " " + new TextObject(RefValues.SecondsText), MsgType.Warning);
                             }
                         }
                     }
