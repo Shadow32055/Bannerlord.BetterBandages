@@ -5,6 +5,7 @@ using TaleWorlds.InputSystem;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 using BetterBandages.Localization;
+using TaleWorlds.Core;
 
 namespace BetterBandages.Behaviors {
     public class Bandages : MissionBehavior {
@@ -81,8 +82,8 @@ namespace BetterBandages.Behaviors {
                             if (bleedInterval.IsPast) {
                                 Mission.Current.MainAgent.Health -= ((BetterBandages.Settings.BandageBleedDamagePercent * bleedStack) * Mission.MainAgent.HealthLimit);
 
-                                if (Mission.Current.MainAgent.Health < 0) {
-                                    Mission.Current.MainAgent.Die(new Blow());
+                                if (Mission.MainAgent.Health <= 0) {
+                                    Mission.KillAgentCheat(Mission.MainAgent);
                                 }
 
                                 bleedInterval = MissionTime.SecondsFromNow(BetterBandages.Settings.BandageBleedInterval);
@@ -127,14 +128,18 @@ namespace BetterBandages.Behaviors {
                 NotifyHelper.ChatMessage(new TextObject(RefValues.CantBandage).ToString(), MsgType.Alert);
             }
         }
-
-        public override void OnAgentHit(Agent affectedAgent, Agent affectorAgent, in MissionWeapon affectorWeapon, in Blow blow, in AttackCollisionData attackCollisionData) {
-            base.OnAgentHit(affectedAgent, affectorAgent, affectorWeapon, blow, attackCollisionData);
+        public override void OnScoreHit(Agent affectedAgent, Agent affectorAgent, WeaponComponentData attackerWeapon, bool isBlocked, bool isSiegeEngineHit, in Blow blow, in AttackCollisionData collisionData, float damagedHp, float hitDistance, float shotDifficulty) {
+            base.OnScoreHit(affectedAgent, affectorAgent, attackerWeapon, isBlocked, isSiegeEngineHit, blow, collisionData, damagedHp, hitDistance, shotDifficulty);
+        
+       
             try {
                 if (BetterBandages.Settings.BandageBleedEnabled) {
                     if (affectedAgent == null) {
                         return;
                     }
+
+                    if (isBlocked)
+                        return;
 
                     if (affectedAgent == Mission.MainAgent) {
                         //NotifyHelper.ChatMessage("Considering bleed", MsgType.Risk);
@@ -151,7 +156,7 @@ namespace BetterBandages.Behaviors {
                                 } else {
                                     bleedStack = 1;
                                 }
-                                NotifyHelper.ChatMessage(new TextObject(RefValues.ApplyBleedMsg) + " " + BetterBandages.Settings.BandageBleedDuration.ToString() + " " + new TextObject(RefValues.SecondsText), MsgType.Warning);
+                                NotifyHelper.ChatMessage(bleedStack.ToString() + new TextObject(RefValues.ApplyBleedMsg) + " " + BetterBandages.Settings.BandageBleedDuration.ToString() + " " + new TextObject(RefValues.SecondsText), MsgType.Warning);
                             }
                         }
                     }

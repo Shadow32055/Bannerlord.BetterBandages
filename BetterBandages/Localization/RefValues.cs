@@ -48,6 +48,6 @@
         public const string OutOfBandages = "{=BBA_dU1uDF}Out of bandages!";
         public const string CantBandage = "{=BBA_CfS4GM}You can't bandage while moving!";
 
-        public const string ApplyBleedMsg = "{=BBA_UbebxO}x bleed applied for ";
+        public const string ApplyBleedMsg = "{=BBA_UbebxO}x bleed applied for";
     }
 }
