@@ -10,57 +10,57 @@ namespace BetterBandages.Settings {
 
 
         [SettingPropertyGroup(RefValues.BandageText)]
-        [SettingPropertyInteger("{=BC_WI3k5M}Number of Bandages", 1, 100, "0 {=BC_wj2XMD}Bandages", Order = 0, RequireRestart = false, HintText = "{=BC_AuTuGq}Number of bandages for use each mission")]
+        [SettingPropertyInteger(RefValues.BandageAmountText, 1, 100, "0 " + RefValues.BandageText, Order = 0, RequireRestart = false, HintText = RefValues.BandageAmountHint)]
         public int BandageAmount { get; set; } = 3;
 
         [SettingPropertyGroup(RefValues.BandageText)]
-        [SettingPropertyFloatingInteger("{=BC_kKKj82}Health Per Bandage", 1f, 1000f, "0.0 HP", Order = 0, RequireRestart = false, HintText = "{=BC_Z7T6KB}How much health each bandage applies")]
+        [SettingPropertyFloatingInteger(RefValues.BandageHealthText, 1f, 1000f, "0.0 HP", Order = 0, RequireRestart = false, HintText = RefValues.BandageHealthHint)]
         public float BandageHealAmount { get; set; } = 10;
 
         [SettingPropertyGroup(RefValues.BandageText)]
-        [SettingPropertyFloatingInteger("{=BC_L2llEt}Bandage Time", 0f, 60f, "0.0 {=BC_mIjl1T}Seconds", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
+        [SettingPropertyFloatingInteger(RefValues.BandageTimeText, 0f, 60f, "0.0 " + RefValues.SecondsText, Order = 0, RequireRestart = false, HintText = RefValues.BandageTimeHint)]
         public float BandageTime { get; set; } = 3;
 
         [SettingPropertyGroup(RefValues.BandageText)]
-        [SettingProperty("{=BC_MfXZnQ}Bandage Key", Order = 0, RequireRestart = true, HintText = "{=BC_19RaR4}What key to use for Bandages. Examples 'Q', 'Numpad0'")]
+        [SettingProperty(RefValues.BandageKeyText, Order = 0, RequireRestart = true, HintText = RefValues.BandageKeyHint)]
         public string BandageKey { get; set; } = "B";
 
-        [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect")]
-        [SettingPropertyBool("{=BC_licHNP}Bleed Effect", IsToggle = true, Order = 0, RequireRestart = false, HintText = "{=BC_xACH0R}SHould bleeding be possible")]
+        [SettingPropertyGroup(RefValues.BandageText + "/" + RefValues.BleedText)]
+        [SettingPropertyBool(RefValues.EnableBleedText, IsToggle = true, Order = 0, RequireRestart = false, HintText = RefValues.EnableBleedHint)]
         public bool BandageBleedEnabled { get; set; } = false;
 
-        [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect")]
-        [SettingPropertyFloatingInteger("{=BC_L2llEt}Health Percent when Bleed Effect can occur", 0.01f, 1f, "0.0 %", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
+        [SettingPropertyGroup(RefValues.BandageText + "/" + RefValues.BleedText)]
+        [SettingPropertyFloatingInteger(RefValues.MinBleedText, 0.01f, 1f, "0.0 %", Order = 0, RequireRestart = false, HintText = RefValues.MinBleedHint)]
         public float BandageBleedTiggerThreshold { get; set; } = .2f;
 
-        [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect")]
-        [SettingPropertyFloatingInteger("{=BC_L2llEt}Bleed Chance", 0.01f, 1f, "0.0 %", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
+        [SettingPropertyGroup(RefValues.BandageText + "/" + RefValues.BleedText)]
+        [SettingPropertyFloatingInteger(RefValues.BleedChanceText, 0.01f, 1f, "0.0 %", Order = 0, RequireRestart = false, HintText = RefValues.BleedChanceHint)]
         public float BandageBleedChance { get; set; } = .2f;
 
-        [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect")]
-        [SettingPropertyFloatingInteger("{=BC_L2llEt}Bleed Damage", 0.01f, 1f, "0.0 %", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
+        [SettingPropertyGroup(RefValues.BandageText + "/" + RefValues.BleedText)]
+        [SettingPropertyFloatingInteger(RefValues.BleedDamageText, 0.01f, 1f, "0.0 %", Order = 0, RequireRestart = false, HintText = RefValues.BleedDamageHint)]
         public float BandageBleedDamagePercent { get; set; } = .05f;
 
-        [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect")]
-        [SettingPropertyInteger("{=BC_L2llEt}Bleed Interval", 1, 120, "0 {=BC_mIjl1T}Seconds", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
+        [SettingPropertyGroup(RefValues.BandageText + "/" + RefValues.BleedText)]
+        [SettingPropertyInteger(RefValues.BleedIntervalText, 1, 120, "0 " + RefValues.SecondsText, Order = 0, RequireRestart = false, HintText = RefValues.BleedIntervalHint)]
         public int BandageBleedInterval { get; set; } = 5;
 
-        [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect")]
-        [SettingPropertyInteger("{=BC_L2llEt}Bleed Duration", 1, 300, "0 {=BC_mIjl1T}Seconds", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
+        [SettingPropertyGroup(RefValues.BandageText + "/" + RefValues.BleedText)]
+        [SettingPropertyInteger(RefValues.BleedDurationText, 1, 300, "0 " + RefValues.SecondsText, Order = 0, RequireRestart = false, HintText = RefValues.BleedDurationHint)]
         public int BandageBleedDuration { get; set; } = 60;
 
 
 
-        [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect/Stacking")]
-        [SettingPropertyBool("{=BC_licHNP}Bleed Effect Stack", IsToggle = true, Order = 0, RequireRestart = false, HintText = "{=BC_xACH0R}SHould bleeding be possible")]
+        [SettingPropertyGroup(RefValues.BandageText + "/" + RefValues.BleedText + "/" + RefValues.StackingText)]
+        [SettingPropertyBool(RefValues.BleedStackText, IsToggle = true, Order = 0, RequireRestart = false, HintText = RefValues.BleedStackHint)]
         public bool BandageBleedStackEnabled { get; set; } = false;
 
-        [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect/Stacking")]
-        [SettingPropertyInteger("{=BC_L2llEt}Bleed Max Stack Size", 1, 100, "0 {=BC_mIjl1T}Stacks", Order = 0, RequireRestart = false, HintText = "{=BC_IdToPT}How long it takes to bandage, can't move during this time")]
+        [SettingPropertyGroup(RefValues.BandageText + "/" + RefValues.BleedText + "/" + RefValues.StackingText)]
+        [SettingPropertyInteger(RefValues.MaxStackText, 1, 100, "0 " + RefValues.StacksText, Order = 0, RequireRestart = false, HintText = RefValues.MaxStackHint)]
         public int BandageBleedStackSize { get; set; } = 3;
 
-        [SettingPropertyGroup(RefValues.BandageText + "/Bleed Effect/Stacking")]
-        [SettingPropertyBool("{=BC_licHNP}Bandage Clears Bleed Stack", IsToggle = true, Order = 0, RequireRestart = false, HintText = "{=BC_xACH0R}SHould bleeding be possible")]
+        [SettingPropertyGroup(RefValues.BandageText + "/" + RefValues.BleedText + "/" + RefValues.StackingText)]
+        [SettingPropertyBool(RefValues.ClearStackText, IsToggle = true, Order = 0, RequireRestart = false, HintText = RefValues.ClearStackHint)]
         public bool BandageClearsBleedStack { get; set; } = false;
 
 
