@@ -60,7 +60,7 @@ namespace BetterBandages.Settings {
         public int BandageBleedStackSize { get; set; } = 3;
 
         [SettingPropertyGroup(RefValues.BandageText + "/" + RefValues.BleedText + "/" + RefValues.StackingText)]
-        [SettingPropertyBool(RefValues.ClearStackText, IsToggle = true, Order = 0, RequireRestart = false, HintText = RefValues.ClearStackHint)]
+        [SettingPropertyBool(RefValues.ClearStackText, Order = 0, RequireRestart = false, HintText = RefValues.ClearStackHint)]
         public bool BandageClearsBleedStack { get; set; } = false;
 
 

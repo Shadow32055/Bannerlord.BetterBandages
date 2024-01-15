@@ -1,11 +1,11 @@
-﻿using BetterCore.Utils;
+﻿using BetterBandages.Localization;
+using BetterCore.Utils;
 using System;
-using TaleWorlds.Library;
+using TaleWorlds.Core;
 using TaleWorlds.InputSystem;
+using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
-using BetterBandages.Localization;
-using TaleWorlds.Core;
 
 namespace BetterBandages.Behaviors {
     public class Bandages : MissionBehavior {
