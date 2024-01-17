@@ -1,10 +1,11 @@
-﻿namespace BetterBandages.Localization {
-    public class RefValues {
+﻿namespace BetterBandages {
+    public class Strings {
         public const string BandageText = "{=BBA_39fja3}Bandages";
         public const string BleedText = "{=BBA_aso20d}Bleed Effect";
         public const string SecondsText = "{=BBA_mIjl1T}Seconds";
         public const string StackingText = "{=BBA_k30f8a}Stacking";
         public const string StacksText = "{=BBA_wj2XMD}Stacks";
+        public const string MedicalSkillText = "{=BBA_309dm3}Medical Skill";
 
         public const string BandageAmountText = "{=BBA_WI3k5M}Number of Bandages";
         public const string BandageAmountHint = "{=BBA_AuTuGq}Number of bandages for use each mission";
@@ -49,5 +50,11 @@
         public const string CantBandage = "{=BBA_CfS4GM}You can't bandage while moving!";
 
         public const string ApplyBleedMsg = "{=BBA_UbebxO}x bleed applied for";
+
+        public const string MedicalSkillEnableText = "{=BBA_n4v3xA}Medical skill extra bandages";
+        public const string MedicalSkillEnabledHint = "{=BBA_isMyzj}Should you get extra bandages based on medical skill";
+
+        public const string MedicalAmountText = "{=BBA_xKh9I8}Medical skill per banadage";
+        public const string MedicalAmountHint = "{=BBA_yfDDRy}Number of medical skill levels needed for one extra bandage. 10 means at level 100 you'd have 10 extra bandes ontop of the intial amount.";
     }
 }
