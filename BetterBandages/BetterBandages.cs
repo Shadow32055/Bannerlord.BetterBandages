@@ -32,7 +32,7 @@ namespace BetterBandages {
 
                 isInitialized = true;
             } catch (Exception e) {
-                NotifyHelper.ReportError(ModName, "OnSubModuleLoad threw exception " + e);
+                NotifyHelper.WriteError(ModName, "OnSubModuleLoad threw exception " + e);
             }
         }
 
@@ -49,12 +49,12 @@ namespace BetterBandages {
                 Settings = MCMSettings.Instance ?? throw new NullReferenceException("Settings are null");
                 RegisterBandageKey();
 
-                NotifyHelper.ChatMessage(ModName + " Loaded.", MsgType.Good);
+                NotifyHelper.WriteMessage(ModName + " Loaded.", MsgType.Good);
                 Integrations.BetterBandagesLoaded = true;
 
                 isLoaded = true;
             } catch (Exception e) {
-                NotifyHelper.ReportError(ModName, "OnBeforeInitialModuleScreenSetAsRoot threw exception " + e);
+                NotifyHelper.WriteError(ModName, "OnBeforeInitialModuleScreenSetAsRoot threw exception " + e);
             }
         }
 
@@ -63,7 +63,7 @@ namespace BetterBandages {
             try {
                 mission.AddMissionBehavior(new Bandages());
             } catch (Exception e) {
-                NotifyHelper.ReportError(ModName, "OnMissionBehaviorInitialize threw exception " + e);
+                NotifyHelper.WriteError(ModName, "OnMissionBehaviorInitialize threw exception " + e);
             }
         }
 
@@ -76,7 +76,7 @@ namespace BetterBandages {
                     throw new Exception();
                 }
             } catch (Exception e) {
-                NotifyHelper.ReportError(ModName, "Issue registering bandage key. '" + Settings.BandageKey + "' is not a valid key. Using deafult 'Q' key. Exception " + e);
+                NotifyHelper.WriteError(ModName, "Issue registering bandage key. '" + Settings.BandageKey + "' is not a valid key. Using deafult 'Q' key. Exception " + e);
             }
         }
     }

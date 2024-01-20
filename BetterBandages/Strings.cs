@@ -6,6 +6,7 @@
         public const string StackingText = "{=BBA_k30f8a}Stacking";
         public const string StacksText = "{=BBA_wj2XMD}Stacks";
         public const string MedicalSkillText = "{=BBA_309dm3}Medical Skill";
+        public const string PerBandageText = "{=BBA_2mdf3n}per Bandage";
 
         public const string BandageAmountText = "{=BBA_WI3k5M}Number of Bandages";
         public const string BandageAmountHint = "{=BBA_AuTuGq}Number of bandages for use each mission";

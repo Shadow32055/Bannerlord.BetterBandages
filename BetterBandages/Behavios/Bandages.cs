@@ -6,8 +6,7 @@ using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 
-namespace BetterBandages.Behaviors
-{
+namespace BetterBandages.Behaviors {
     public class Bandages : MissionBehavior {
 
         private static MissionTime bandageTime;
@@ -22,8 +21,9 @@ namespace BetterBandages.Behaviors
 
         public override MissionBehaviorType BehaviorType => MissionBehaviorType.Other;
 
-        public override void AfterStart() {
-            base.AfterStart();
+        public override void OnDeploymentFinished() {
+            base.OnDeploymentFinished();
+
             bandageCount = BetterBandages.Settings.BandageAmount;
 
             if (BetterBandages.Settings.ExtraBandages)
@@ -39,7 +39,7 @@ namespace BetterBandages.Behaviors
                     if (Mission.Current.MainAgent.Health > 0) {
                         if (activlyBandaging) {
                             if (IsMoving(Mission.Current.MainAgent.MovementVelocity)) {
-                                NotifyHelper.ChatMessage(new TextObject(Strings.CancelBandaging).ToString(), MsgType.Alert);
+                                NotifyHelper.WriteMessage(new TextObject(Strings.CancelBandaging).ToString(), MsgType.Alert);
                                 activlyBandaging = false;
                             }
 
@@ -59,9 +59,9 @@ namespace BetterBandages.Behaviors
 
                                     if (bleedStack == 0) {
                                         isBleeding = false;
-                                        NotifyHelper.ChatMessage(new TextObject(Strings.RemoveBleed).ToString(), MsgType.Good);
+                                        NotifyHelper.WriteMessage(new TextObject(Strings.RemoveBleed).ToString(), MsgType.Good);
                                     } else {
-                                        NotifyHelper.ChatMessage(new TextObject(Strings.RemoveBleedStack).ToString(), MsgType.Good);
+                                        NotifyHelper.WriteMessage(new TextObject(Strings.RemoveBleedStack).ToString(), MsgType.Good);
                                     }
                                 }
                                 activlyBandaging = false;
@@ -73,7 +73,7 @@ namespace BetterBandages.Behaviors
                                     text = new TextObject(Strings.BandageApplied) + " " + bandageCount.ToString() + " " + new TextObject(Strings.MultipleBandLeft);
                                 }
 
-                                NotifyHelper.ChatMessage(text, MsgType.Good);
+                                NotifyHelper.WriteMessage(text, MsgType.Good);
                             }
                         }
 
@@ -99,7 +99,7 @@ namespace BetterBandages.Behaviors
                     }
                 }
             } catch (Exception e) {
-                NotifyHelper.ReportError(BetterBandages.ModName, "Problem with bandages, cause: " + e);
+                NotifyHelper.WriteError(BetterBandages.ModName, "Problem with bandages, cause: " + e);
             }
         }
 
@@ -117,18 +117,18 @@ namespace BetterBandages.Behaviors
                         if (Mission.Current.MainAgent.Health != Mission.Current.MainAgent.HealthLimit) {
                             bandageTime = MissionTime.SecondsFromNow(BetterBandages.Settings.BandageTime);
                             activlyBandaging = true;
-                            NotifyHelper.ChatMessage(new TextObject(Strings.ApplyingBandage) + " " + BetterBandages.Settings.BandageTime.ToString() + " " + new TextObject(Strings.SecondsText), MsgType.Good);
+                            NotifyHelper.WriteMessage(new TextObject(Strings.ApplyingBandage) + " " + BetterBandages.Settings.BandageTime.ToString() + " " + new TextObject(Strings.SecondsText), MsgType.Good);
                         } else {
-                            NotifyHelper.ChatMessage(new TextObject(Strings.FullHealth) + " " + bandageCount.ToString() + " " + new TextObject(Strings.BandageText), MsgType.Alert);
+                            NotifyHelper.WriteMessage(new TextObject(Strings.FullHealth) + " " + bandageCount.ToString() + " " + new TextObject(Strings.BandageText), MsgType.Alert);
                         }
                     } else {
-                        NotifyHelper.ChatMessage(new TextObject(Strings.AlreadyApplying).ToString(), MsgType.Alert);
+                        NotifyHelper.WriteMessage(new TextObject(Strings.AlreadyApplying).ToString(), MsgType.Alert);
                     }
                 } else {
-                    NotifyHelper.ChatMessage(new TextObject(Strings.OutOfBandages).ToString(), MsgType.Alert);
+                    NotifyHelper.WriteMessage(new TextObject(Strings.OutOfBandages).ToString(), MsgType.Alert);
                 }
             } else {
-                NotifyHelper.ChatMessage(new TextObject(Strings.CantBandage).ToString(), MsgType.Alert);
+                NotifyHelper.WriteMessage(new TextObject(Strings.CantBandage).ToString(), MsgType.Alert);
             }
         }
         public override void OnScoreHit(Agent affectedAgent, Agent affectorAgent, WeaponComponentData attackerWeapon, bool isBlocked, bool isSiegeEngineHit, in Blow blow, in AttackCollisionData collisionData, float damagedHp, float hitDistance, float shotDifficulty) {
@@ -159,14 +159,14 @@ namespace BetterBandages.Behaviors
                                 } else {
                                     bleedStack = 1;
                                 }
-                                NotifyHelper.ChatMessage(bleedStack.ToString() + new TextObject(Strings.ApplyBleedMsg) + " " + BetterBandages.Settings.BandageBleedDuration.ToString() + " " + new TextObject(Strings.SecondsText), MsgType.Warning);
+                                NotifyHelper.WriteMessage(bleedStack.ToString() + new TextObject(Strings.ApplyBleedMsg) + " " + BetterBandages.Settings.BandageBleedDuration.ToString() + " " + new TextObject(Strings.SecondsText), MsgType.Warning);
                             }
                         }
                     }
                 }
 
             } catch (Exception e){
-                NotifyHelper.ReportError(BetterBandages.ModName, "OnAgentHit threw exception " + e);
+                NotifyHelper.WriteError(BetterBandages.ModName, "OnAgentHit threw exception " + e);
             }
 
 

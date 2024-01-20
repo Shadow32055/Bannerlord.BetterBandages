@@ -67,7 +67,7 @@ namespace BetterBandages.Settings {
         public bool ExtraBandages { get; set; } = false;
 
         [SettingPropertyGroup(Strings.BandageText + "/" + Strings.MedicalSkillText)]
-        [SettingPropertyInteger(Strings.MedicalAmountText, 1, 100, "0 " + Strings.BandageText, Order = 0, RequireRestart = false, HintText = Strings.MedicalAmountHint)]
+        [SettingPropertyInteger(Strings.MedicalAmountText, 1, 100, "0 " + Strings.PerBandageText, Order = 0, RequireRestart = false, HintText = Strings.MedicalAmountHint)]
         public int ExtraBandagesSP { get; set; } = 10;
 
 
