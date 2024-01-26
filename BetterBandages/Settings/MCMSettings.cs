@@ -15,6 +15,12 @@ namespace BetterBandages.Settings {
         [SettingPropertyFloatingInteger(Strings.BandageHealthText, 1f, 1000f, "0.0 HP", Order = 0, RequireRestart = false, HintText = Strings.BandageHealthHint)]
         public float BandageHealAmount { get; set; } = 10;
 
+
+        [SettingPropertyGroup(Strings.BandageText)]
+        [SettingPropertyFloatingInteger(Strings.MedicalXPText, 0f, 1f, "0.0%", Order = 0, RequireRestart = false, HintText = Strings.MedicalXPHint)]
+        public float MedicalXPPercent { get; set; } = .1f;
+
+
         [SettingPropertyGroup(Strings.BandageText)]
         [SettingPropertyFloatingInteger(Strings.BandageTimeText, 0f, 60f, "0.0 " + Strings.SecondsText, Order = 0, RequireRestart = false, HintText = Strings.BandageTimeHint)]
         public float BandageTime { get; set; } = 3;

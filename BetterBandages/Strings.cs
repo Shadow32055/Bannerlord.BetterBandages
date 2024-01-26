@@ -18,11 +18,11 @@
         public const string BandageKeyHint = "{=BBA_19RaR4}What key to use for Bandages. Examples 'Q', 'Numpad0'";
 
         public const string EnableBleedText = "{=BBA_licHNP}Bleed Effect";
-        public const string EnableBleedHint = "{=BBA_xACH0R}SHould bleeding be possible";
+        public const string EnableBleedHint = "{=BBA_xACH0R}Should bleeding be possible";
         public const string MinBleedText = "{=BBA_a6G9pB}Min Health Bleed Effect can occur";
         public const string MinBleedHint = "{=BBA_fsx0Fr}Set a health threshold where it is possible to get the bleed effect";
         public const string BleedChanceText = "{=BBA_5PRVGK}Bleed Chance";
-        public const string BleedChanceHint = "{=BBA_Amokls}Chance a bleed will occur after the min helath threshold is reached";
+        public const string BleedChanceHint = "{=BBA_Amokls}Chance a bleed will occur after the min health threshold is reached";
         public const string BleedDamageText = "{=BBA_thlfWM}Bleed Damage";
         public const string BleedDamageHint = "{=BBA_pmhnn2}How much damage each bleed interval should deal";
         public const string BleedIntervalText = "{=BBA_aLKVgT}Bleed Interval";
@@ -37,7 +37,7 @@
         public const string ClearStackText = "{=BBA_YKi92O}Bandage Clears Bleed Stack";
         public const string ClearStackHint = "{=BBA_K7kJb6}Should bandaging clear the bleed stack";
 
-        public const string CancelBandaging = "{=BBA_0yN5hL}Bandaging canceled due to movment!";
+        public const string CancelBandaging = "{=BBA_0yN5hL}Bandaging canceled due to movement!";
         public const string RemoveBleed = "{=BBA_d49hR8}Bleeding removed.";
         public const string RemoveBleedStack = "{=BBA_qezRvY}Bleeding stack removed.";
         public const string BandageApplied = "{=BBA_q2WCze}Bandage applied!";
@@ -55,7 +55,10 @@
         public const string MedicalSkillEnableText = "{=BBA_n4v3xA}Medical skill extra bandages";
         public const string MedicalSkillEnabledHint = "{=BBA_isMyzj}Should you get extra bandages based on medical skill";
 
-        public const string MedicalAmountText = "{=BBA_xKh9I8}Medical skill per banadage";
-        public const string MedicalAmountHint = "{=BBA_yfDDRy}Number of medical skill levels needed for one extra bandage. 10 means at level 100 you'd have 10 extra bandes ontop of the intial amount.";
+        public const string MedicalAmountText = "{=BBA_xKh9I8}Medical skill per bandage";
+        public const string MedicalAmountHint = "{=BBA_yfDDRy}Number of medical skill levels needed for one extra bandage. 10 means at level 100 you'd have 10 extra bandages on top of the initial amount.";
+
+        public const string MedicalXPText = "{=BBA_340afn}Medical XP";
+        public const string MedicalXPHint = "{=BBA_78t1fa}Percentage of health healed to be granted as medical XP";
     }
 }

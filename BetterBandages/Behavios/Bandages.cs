@@ -1,5 +1,6 @@
 ﻿using BetterCore.Utils;
 using System;
+using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
@@ -13,7 +14,7 @@ namespace BetterBandages.Behaviors {
         private static MissionTime bleedInterval;
         private static MissionTime bleedDuration;
 
-        private static bool activlyBandaging = false;
+        private static bool isBandaging = false;
         private static bool isBleeding = false;
         private static int bleedStack;
 
@@ -37,16 +38,15 @@ namespace BetterBandages.Behaviors {
                 if (Mission.Current != null && Mission.Current.MainAgent != null) {
 
                     if (Mission.Current.MainAgent.Health > 0) {
-                        if (activlyBandaging) {
+                        if (isBandaging) {
                             if (IsMoving(Mission.Current.MainAgent.MovementVelocity)) {
                                 NotifyHelper.WriteMessage(new TextObject(Strings.CancelBandaging).ToString(), MsgType.Alert);
-                                activlyBandaging = false;
+                                isBandaging = false;
                             }
 
                             if (bandageTime.IsPast) {
-                                float healAmount = HealthHelper.GetMaxHealAmount(BetterBandages.Settings.BandageHealAmount, Mission.MainAgent);
-
-                                Mission.Current.MainAgent.Health += healAmount;
+                                float healed = HealthHelper.HealAgent(Mission.Current.MainAgent, BetterBandages.Settings.BandageHealAmount);
+                                Hero.MainHero.AddSkillXp(DefaultSkills.Medicine, healed * BetterBandages.Settings.MedicalXPPercent);
                                 bandageCount--;
 
                                 if (isBleeding) {
@@ -63,8 +63,10 @@ namespace BetterBandages.Behaviors {
                                     } else {
                                         NotifyHelper.WriteMessage(new TextObject(Strings.RemoveBleedStack).ToString(), MsgType.Good);
                                     }
+                                } else {
+                                    bleedStack = 0;
                                 }
-                                activlyBandaging = false;
+                                isBandaging = false;
 
                                 string text;
                                 if (bandageCount < 2) {
@@ -113,10 +115,10 @@ namespace BetterBandages.Behaviors {
         public void UseBandage() {
             if (!IsMoving(Mission.Current.MainAgent.MovementVelocity)) {
                 if (bandageCount > 0) {
-                    if (!activlyBandaging) {
+                    if (!isBandaging) {
                         if (Mission.Current.MainAgent.Health != Mission.Current.MainAgent.HealthLimit) {
                             bandageTime = MissionTime.SecondsFromNow(BetterBandages.Settings.BandageTime);
-                            activlyBandaging = true;
+                            isBandaging = true;
                             NotifyHelper.WriteMessage(new TextObject(Strings.ApplyingBandage) + " " + BetterBandages.Settings.BandageTime.ToString() + " " + new TextObject(Strings.SecondsText), MsgType.Good);
                         } else {
                             NotifyHelper.WriteMessage(new TextObject(Strings.FullHealth) + " " + bandageCount.ToString() + " " + new TextObject(Strings.BandageText), MsgType.Alert);
@@ -133,8 +135,6 @@ namespace BetterBandages.Behaviors {
         }
         public override void OnScoreHit(Agent affectedAgent, Agent affectorAgent, WeaponComponentData attackerWeapon, bool isBlocked, bool isSiegeEngineHit, in Blow blow, in AttackCollisionData collisionData, float damagedHp, float hitDistance, float shotDifficulty) {
             base.OnScoreHit(affectedAgent, affectorAgent, attackerWeapon, isBlocked, isSiegeEngineHit, blow, collisionData, damagedHp, hitDistance, shotDifficulty);
-        
-       
             try {
                 if (BetterBandages.Settings.BandageBleedEnabled) {
                     if (affectedAgent == null) {

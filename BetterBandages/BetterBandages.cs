@@ -76,7 +76,7 @@ namespace BetterBandages {
                     throw new Exception();
                 }
             } catch (Exception e) {
-                NotifyHelper.WriteError(ModName, "Issue registering bandage key. '" + Settings.BandageKey + "' is not a valid key. Using deafult 'Q' key. Exception " + e);
+                NotifyHelper.WriteError(ModName, "Issue registering bandage key. '" + Settings.BandageKey + "' is not a valid key. Using default 'Q' key. Exception " + e);
             }
         }
     }
