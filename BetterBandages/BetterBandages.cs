@@ -9,7 +9,7 @@ using TaleWorlds.MountAndBlade;
 namespace BetterBandages {
     public class BetterBandages : MBSubModuleBase {
 
-        public static MCMSettings Settings { get; private set; }
+        public static MCMSettings Settings { get; private set; } = new MCMSettings();
         public static MissionBehavior Bandages { get; private set; } = new Bandages();
         public static string ModName { get; private set; } = "BetterBandages";
 
